@@ -116,3 +116,30 @@ if (localStorage.getItem("theme") === "light_theme") {
   document.body.classList.remove("light_theme");
   document.body.classList.add("dark_theme");
 }
+
+/**
+ * Initialize Swiper Carousel for Testimonials
+ */
+document.addEventListener("DOMContentLoaded", function() {
+  if (typeof Swiper !== 'undefined') {
+    const swiper = new Swiper('.testimonial-swiper', {
+      slidesPerView: 1,
+      spaceBetween: 30,
+      loop: true,
+      grabCursor: true,
+      autoplay: {
+        delay: 5000,
+        disableOnInteraction: false,
+      },
+      pagination: {
+        el: '.swiper-pagination',
+        clickable: true,
+      },
+      breakpoints: {
+        768: {
+          slidesPerView: 2,
+        }
+      }
+    });
+  }
+});

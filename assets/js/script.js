@@ -143,3 +143,65 @@ document.addEventListener("DOMContentLoaded", function() {
     });
   }
 });
+
+/**
+ * Contact Form — AJAX submit with toast notification
+ */
+document.addEventListener("DOMContentLoaded", function() {
+  const form = document.getElementById("contact-form");
+  if (!form) return;
+
+  form.addEventListener("submit", function(e) {
+    e.preventDefault();
+
+    const formData = new FormData(form);
+    const submitBtn = form.querySelector('button[type="submit"]');
+    const originalText = submitBtn.textContent;
+    submitBtn.textContent = "Sending...";
+    submitBtn.disabled = true;
+
+    fetch(form.action, {
+      method: "POST",
+      body: formData,
+      headers: { 'Accept': 'application/json' }
+    })
+    .then(response => {
+      if (response.ok) {
+        showToast("Message sent successfully! I'll get back to you soon.", "success");
+        form.reset();
+      } else {
+        showToast("Something went wrong. Please try again or email me directly.", "error");
+      }
+    })
+    .catch(() => {
+      showToast("Network error. Please check your connection and try again.", "error");
+    })
+    .finally(() => {
+      submitBtn.textContent = originalText;
+      submitBtn.disabled = false;
+    });
+  });
+
+  function showToast(message, type) {
+    // Remove existing toast if any
+    const existing = document.querySelector(".toast-notification");
+    if (existing) existing.remove();
+
+    const toast = document.createElement("div");
+    toast.className = "toast-notification toast-" + type;
+    toast.innerHTML = `
+      <ion-icon name="${type === 'success' ? 'checkmark-circle' : 'alert-circle'}"></ion-icon>
+      <span>${message}</span>
+    `;
+    document.body.appendChild(toast);
+
+    // Trigger animation
+    requestAnimationFrame(() => toast.classList.add("show"));
+
+    // Auto-remove after 5s
+    setTimeout(() => {
+      toast.classList.remove("show");
+      setTimeout(() => toast.remove(), 300);
+    }, 5000);
+  }
+});

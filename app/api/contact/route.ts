@@ -3,8 +3,8 @@ import { MongoClient } from "mongodb"
 
 let client: MongoClient | null = null
 async function getClient() {
-  if (!process.env.MONGODB_URI) throw new Error("MONGODB_URI is not configured")
-  client ??= new MongoClient(process.env.MONGODB_URI)
+  if (!process.env.MONGODB_CONNECTION_STRING) throw new Error("MONGODB_CONNECTION_STRING is not configured")
+  client ??= new MongoClient(process.env.MONGODB_CONNECTION_STRING)
   await client.connect()
   return client
 }

@@ -1,0 +1,15 @@
+@import url('https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=Space+Grotesk:wght@400;500;600;700&display=swap');
+@import 'tailwindcss';
+
+:root { --ink:#101312; --paper:#e9eddf; --acid:#d8ff3e; --coral:#ff725c; --muted:#899185; }
+@theme inline { --color-ink:var(--ink); --color-paper:var(--paper); --color-acid:var(--acid); --color-coral:var(--coral); --color-muted:var(--muted); --font-sans:'Space Grotesk',sans-serif; --font-mono:'DM Mono',monospace; }
+* { box-sizing:border-box; }
+html { scroll-behavior:smooth; }
+body { margin:0; background:var(--ink); color:var(--paper); font-family:'Space Grotesk',sans-serif; }
+::selection { background:var(--acid); color:var(--ink); }
+.grid-bg { background-image:linear-gradient(rgba(233,237,223,.06) 1px,transparent 1px),linear-gradient(90deg,rgba(233,237,223,.06) 1px,transparent 1px); background-size:44px 44px; }
+.noise { position:relative; }
+.noise:before { content:''; position:absolute; inset:0; pointer-events:none; opacity:.08; background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 180 180' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.8' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='.5'/%3E%3C/svg%3E"); mix-blend-mode:screen; }
+.float { animation:float 6s ease-in-out infinite; } @keyframes float { 50% { transform:translateY(-12px) rotate(2deg); } }
+.marquee { animation:marquee 24s linear infinite; } @keyframes marquee { to { transform:translateX(-50%); } }
+@media (prefers-reduced-motion:reduce) { *,*::before,*::after { animation-duration:.001ms!important; transition-duration:.001ms!important; scroll-behavior:auto!important; } }
